@@ -28,7 +28,6 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
 import { bugs, website, server } from "variables/general.js";
 
 import {
@@ -43,8 +42,16 @@ const useStyles = makeStyles(styles);
 
 let test = 10;
 
+const axios = require('axios');
+
+axios.get('http://15.165.214.143:3001/onlineInquiries')
+  .then(res => {
+    res.send(res.data)
+  })
+
 export default function Dashboard() {
   const classes = useStyles();
+
   return (
     <div>
       <GridContainer>
