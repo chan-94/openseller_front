@@ -39,24 +39,19 @@ import {
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
-
-let test = 10;
+const axios = require('axios');
 
 function getOnlineInquiriesCount() {
-  axios.get('http://15.165.214.143:3001/onlineInquiries')
-  .then(res => {
-    // console.log(res.data);
-    let onlineInquiries_count = res.data.data.pagination.totalElements;
-    console.log(onlineInquiries_count);
-    return onlineInquiries_count;
-  })
+  const promise = axios.get('http://15.165.214.143:3001/onlineInquiries');
+  const dataPromise = promise.then((res) => res.data);
+  console.log(dataPromise);
+  return dataPromise;
 }
 
-const axios = require('axios');
 export default function Dashboard() {
   const classes = useStyles();
-  var onlineInquiries_count = getOnlineInquiriesCount();
-  
+  let onlineInquiries_count = getOnlineInquiriesCount();
+  console.log(onlineInquiries_count);
   return (
     <div>
       <GridContainer>
@@ -68,7 +63,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Used Space</p>
               <h3 className={classes.cardTitle}>
-                {test}/50 <small>GB</small>
+                10/50 <small>GB</small>
               </h3>
             </CardHeader>
             <CardFooter stats>
