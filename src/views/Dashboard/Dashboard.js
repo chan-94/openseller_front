@@ -42,16 +42,21 @@ const useStyles = makeStyles(styles);
 
 let test = 10;
 
-const axios = require('axios');
-
-axios.get('http://15.165.214.143:3001/onlineInquiries')
+function getOnlineInquiriesCount() {
+  axios.get('http://15.165.214.143:3001/onlineInquiries')
   .then(res => {
-    res.send(res.data)
+    // console.log(res.data);
+    let onlineInquiries_count = res.data.data.pagination.totalElements;
+    console.log(onlineInquiries_count);
+    return onlineInquiries_count;
   })
+}
 
+const axios = require('axios');
 export default function Dashboard() {
   const classes = useStyles();
-
+  var onlineInquiries_count = getOnlineInquiriesCount();
+  
   return (
     <div>
       <GridContainer>
