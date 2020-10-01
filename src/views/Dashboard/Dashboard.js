@@ -43,7 +43,7 @@ const axios = require('axios');
 
 function getOnlineInquiriesCount() {
   const promise = axios.get('http://15.165.214.143:3001/onlineInquiries');
-  const dataPromise = promise.then((res) => res.data);
+  const dataPromise = promise.then((res) => res.data.data.pagination.totalElements);
   console.log(dataPromise);
   return dataPromise;
 }
