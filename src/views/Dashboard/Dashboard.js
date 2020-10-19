@@ -29,6 +29,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import { bugs, website, server } from "variables/general.js";
+import useAsync from "hooks/useAsync.js";
 
 import {
   dailySalesChart,
@@ -41,17 +42,28 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 const axios = require('axios');
 
-function getOnlineInquiriesCount() {
-  const promise = axios.get('http://15.165.214.143:3001/onlineInquiries');
-  const dataPromise = promise.then((res) => res.data.data.pagination.totalElements);
-  console.log(dataPromise);
-  return dataPromise;
+// function getOnlineInquiriesCount() {
+//   const promise = axios.get('http://15.165.214.143:3001/onlineInquiries');
+//   const dataPromise = promise.then((res) => res.data);
+//   console.log(dataPromise);
+//   return dataPromise;
+// }
+
+function getOnlineInquiriesCount(idx) {
+    axios.get('http://15.165.214.143:3001/onlineInquiries' + (idx == undefined ? "" : "/"+idx))
+        .then(data => {
+            return data.data.data.pagination.totalElements;
+        })
+        .catch(err => {
+            console.log(err);
+            return -1;
+        })
 }
 
 export default function Dashboard() {
   const classes = useStyles();
-  let onlineInquiries_count = getOnlineInquiriesCount();
-  console.log(onlineInquiries_count);
+  const [state, refetch] = useAsync(getOnlineInquiriesCount, []);
+  console.log(getOnlineInquiriesCount());
   return (
     <div>
       <GridContainer>
